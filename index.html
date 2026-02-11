@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sistema de Agendamento - Clínica</title>
+
+  <!-- Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- CSS externo -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+  <h1>Sistema de Agendamento - Clínica</h1>
+  <p>Gerencie consultas de forma simples</p>
+</header>
+
+<div class="container-box">
+
+  <h2>Novo Agendamento</h2>
+
+  <form id="formAgendamento">
+
+    <div class="row mb-3">
+      <div class="col-md-6">
+        <label class="form-label">Nome do Paciente</label>
+        <input type="text" id="nome" data-cy="input-nome" class="form-control" required>
+      </div>
+
+      <div class="col-md-6">
+        <label class="form-label">Telefone</label>
+        <input type="tel" id="telefone" data-cy="input-telefone" class="form-control" required>
+      </div>
+    </div>
+
+    <div class="row mb-3">
+      <div class="col-md-4">
+        <label class="form-label">Data</label>
+        <input type="date" id="data" data-cy="input-data" class="form-control" required>
+      </div>
+
+      <div class="col-md-4">
+        <label class="form-label">Horário</label>
+        <input type="time" id="hora" data-cy="input-hora" class="form-control" required>
+      </div>
+
+      <div class="col-md-4">
+        <label class="form-label">Especialidade</label>
+        <select id="especialidade" data-cy="select-especialidade" class="form-select" required>
+          <option value="">Selecione</option>
+          <option>Clínico Geral</option>
+          <option>Cardiologia</option>
+          <option>Dermatologia</option>
+          <option>Ortopedia</option>
+          <option>Pediatria</option>
+        </select>
+      </div>
+    </div>
+
+    <button type="submit" data-cy="btn-agendar" class="btn btn-primary w-100">Agendar Consulta</button>
+
+  </form>
+
+  <hr>
+
+  <h2>Consultas Agendadas</h2>
+
+  <table class="table table-bordered table-striped">
+    <thead>
+      <tr>
+        <th>Paciente</th>
+        <th>Telefone</th>
+        <th>Data</th>
+        <th>Hora</th>
+        <th>Especialidade</th>
+        <th>Ação</th>
+      </tr>
+    </thead>
+
+    <tbody id="listaAgendamentos"></tbody>
+  </table>
+
+</div>
+
+<footer>
+  <p>Sistema de Agendamento © 2026 Rafael de Sousa</p>
+</footer>
+
+<!-- JS externo -->
+<script src="script.js"></script>
+
+</body>
+</html>
