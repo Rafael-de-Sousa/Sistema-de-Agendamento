@@ -1,9 +1,11 @@
-let agendamentos = JSON.parse(localStorage.getItem('agendamentos')) || [];
-
 const form = document.getElementById('formAgendamento');
 const lista = document.getElementById('listaAgendamentos');
 
-function salvarLocalStorage() {
+function obterAgendamentos() {
+  return JSON.parse(localStorage.getItem('agendamentos')) || [];
+}
+
+function salvarLocalStorage(agendamentos) {
   localStorage.setItem('agendamentos', JSON.stringify(agendamentos));
 }
 
@@ -13,10 +15,15 @@ function formatarData(data) {
 }
 
 function existeConflito(data, hora) {
-  return agendamentos.some(item => item.data === data && item.hora === hora);
+  const agendamentos = obterAgendamentos();
+
+  return agendamentos.some(item =>
+    item.data === data && item.hora === hora
+  );
 }
 
 function renderizarTabela() {
+  const agendamentos = obterAgendamentos();
   lista.innerHTML = '';
 
   agendamentos.forEach((item, index) => {
@@ -30,10 +37,10 @@ function renderizarTabela() {
       <td>${item.especialidade}</td>
       <td>
         <button 
-			class="btn-remove" 
-			data-cy="btn-excluir" 
-			onclick="removerAgendamento(${index})">
-			Excluir
+          class="btn-remove" 
+          data-cy="btn-excluir"
+          onclick="removerAgendamento(${index})">
+          Excluir
         </button>
       </td>
     `;
@@ -56,10 +63,13 @@ form.addEventListener('submit', function(e) {
     return;
   }
 
+  const agendamentos = obterAgendamentos();
+
   const novoAgendamento = { nome, telefone, data, hora, especialidade };
 
   agendamentos.push(novoAgendamento);
-  salvarLocalStorage();
+
+  salvarLocalStorage(agendamentos);
   renderizarTabela();
 
   form.reset();
@@ -68,10 +78,16 @@ form.addEventListener('submit', function(e) {
 
 function removerAgendamento(index) {
   if (confirm('Deseja realmente excluir este agendamento?')) {
+
+    const agendamentos = obterAgendamentos();
+
     agendamentos.splice(index, 1);
-    salvarLocalStorage();
+
+    salvarLocalStorage(agendamentos);
     renderizarTabela();
   }
 }
 
 renderizarTabela();
+
+
