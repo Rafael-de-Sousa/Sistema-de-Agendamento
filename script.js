@@ -1,5 +1,7 @@
 const form = document.getElementById('formAgendamento');
 const lista = document.getElementById('listaAgendamentos');
+const apenasLetras = /^[A-Za-zÀ-ÖØ-öø-ÿ\s]+$/;
+const apenasNumeros = /^[0-1-2-3-4-5-6-7-8-9]+$/;
 
 function obterAgendamentos() {
   return JSON.parse(localStorage.getItem('agendamentos')) || [];
@@ -17,6 +19,8 @@ function formatarData(data) {
 function existeConflito(data, hora) {
   const agendamentos = obterAgendamentos();
 
+	console.log('Comparando com:', agendamentos);
+	
   return agendamentos.some(item =>
     item.data === data && item.hora === hora
   );
@@ -62,6 +66,17 @@ form.addEventListener('submit', function(e) {
     alert('Já existe uma consulta nesse horário!');
     return;
   }
+  
+  // Se o nome NÃO passar no teste (ou seja, se tiver números ou símbolos)
+  if (!apenasLetras.test(nome)) {
+    alert('Preencha o campo com o formato correto! O campo nome não deve conter números.');
+    return;
+  }
+  
+  if (!apenasNumeros.test(telefone)) {
+    alert('Preencha o campo com o formato correto! O campo telefone não deve conter letras.');
+    return;
+  }
 
   const agendamentos = obterAgendamentos();
 
@@ -89,5 +104,3 @@ function removerAgendamento(index) {
 }
 
 renderizarTabela();
-
-
