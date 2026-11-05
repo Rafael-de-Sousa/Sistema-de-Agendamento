@@ -62,12 +62,6 @@ form.addEventListener('submit', function(e) {
   const hora = document.getElementById('hora').value;
   const especialidade = document.getElementById('especialidade').value;
 
-  if (existeConflito(data, hora)) {
-    alert('Já existe uma consulta nesse horário!');
-    return;
-  }
-  
-  // Se o nome NÃO passar no teste (ou seja, se tiver números ou símbolos)
   if (!apenasLetras.test(nome)) {
     alert('Preencha o campo com o formato correto! O campo nome não deve conter números.');
     return;
@@ -75,6 +69,11 @@ form.addEventListener('submit', function(e) {
   
   if (!apenasNumeros.test(telefone)) {
     alert('Preencha o campo com o formato correto! O campo telefone não deve conter letras.');
+    return;
+  }
+
+  if (existeConflito(data, hora)) {
+    alert('Já existe uma consulta nesse horário!');
     return;
   }
 
